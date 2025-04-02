@@ -1,7 +1,6 @@
 import turtle
 import os
-import subprocess  # For running command-line commands
-
+import subprocess
 # Configuration des dimensions
 LARGEUR_FEUILLE, HAUTEUR_FEUILLE = 595, 842  # Taille A4 en pixels
 
@@ -75,12 +74,12 @@ def dessiner_reponses(reponses):
                 turtle.penup()
                 turtle.goto(cx, cy - RAYON_CERCLE)
                 turtle.pendown()
-
                 if reponses[question - 1] == lettre:
-                    # Dessiner un cercle partiellement rempli (mal colorié)
-                    turtle.dot(RAYON_CERCLE - 3, "black")  # Un peu moins rempli que le cercle complet
+                    turtle.begin_fill()
+                    turtle.circle(RAYON_CERCLE)
+                    turtle.end_fill()
                 else:
-                    turtle.dot(RAYON_CERCLE, "white")  # Laisser les autres cercles vides
+                    turtle.circle(RAYON_CERCLE)
 
                 turtle.penup()
                 turtle.goto(cx, cy - RAYON_CERCLE/2 - 3)
@@ -120,26 +119,26 @@ def main():
     dessiner_bandeau_id()
     dessiner_reponses(reponses)
 
-    # Capturer le canvas en EPS
+    # 3) Sauvegarde en EPS -> PDF
     canvas = turtle.getcanvas()
-    eps_file = os.path.join(os.path.dirname(__file__), "feuille_A4.eps")
+    script_dir = os.path.dirname(__file__)
+    eps_file = os.path.join(script_dir, "feuille_A4.eps")
+    pdf_file = os.path.join(script_dir, "QCM_corrige.pdf")
+
+    # Capturer en EPS
     canvas.postscript(file=eps_file)
+    print(f"EPS file saved at: {eps_file}")
 
-    print(f"EPS file saved at: {eps_file}")  # Vérifier le chemin du fichier EPS
-
-    # Convertir l'EPS en PDF dans le même répertoire
-    pdf_file = os.path.join(os.path.dirname(__file__), "QCM_corrige.pdf")
+    # Convertir EPS en PDF
     subprocess.run(["epstopdf", eps_file, "--outfile", pdf_file])
+    print(f"PDF file saved at: {pdf_file}")
 
-    print(f"PDF file saved at: {pdf_file}")  # Vérifier le chemin du fichier PDF
-
-    # Supprimer le fichier EPS après conversion
+    # Supprimer le fichier EPS
     if os.path.exists(eps_file):
         os.remove(eps_file)
         print(f"EPS file deleted: {eps_file}")
 
     turtle.done()
-
 
 if __name__ == "__main__":
     main()
