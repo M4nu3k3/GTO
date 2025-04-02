@@ -1,0 +1,145 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{margin=2cm}
+
+\begin{document}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\begin{itemize}
+    \item Contexte général (évaluations papier automatisées)
+    \item Objectifs du projet
+    \begin{itemize}
+        \item Génération automatique de QCM scannables
+        \item Correction automatique par traitement d'image
+        \item Affichage automatique des résultats
+    \end{itemize}
+    \item Outils utilisés (Python, Turtle, STM32, OpenCV, MATLAB)
+\end{itemize}
+
+\section{Cahier des charges fonctionnel et technique}
+
+\subsection{Environnement d'utilisation}
+\begin{itemize}
+    \item Température : 10 à 30°C
+    \item Hygrométrie relative : 40 à 95\%
+\end{itemize}
+
+\subsection{Alimentation}
+\begin{itemize}
+    \item Alimentation AC/DC : 5V, 1A
+    \item Consommation maximale : 12W
+\end{itemize}
+
+\subsection{Entrées}
+\begin{itemize}
+    \item Adaptateur SD (lecture fichiers QCM)
+    \item Carte micro-SD (stockage fichiers QCM)
+    \item Entrées numériques : 3 entrées (0-3.3V)
+\end{itemize}
+
+\subsection{Sorties}
+\begin{itemize}
+    \item Écran OLED (sélection fichiers, affichage résultats)
+    \item LED témoin (traitement en cours)
+\end{itemize}
+
+\subsection{Interfaces Homme-Machine}
+\begin{itemize}
+    \item Écran OLED (résultats : élève, score)
+    \item Codeur incrémental (navigation)
+    \item LED de statut
+\end{itemize}
+
+\section{Conception et architecture du projet}
+
+\subsection{Schéma Bloc}
+Présentation visuelle des blocs fonctionnels : STM32, SD, OLED, LED, codeur incrémental, alimentation.
+
+\subsection{Choix techniques}
+Justification des choix techniques (STM32, OLED, carte SD, etc.)
+
+\section{Génération automatique des QCM (Python/Turtle)}
+
+\subsection{Structure visuelle des feuilles}
+\begin{itemize}
+    \item Format A4, 2 colonnes, 20 questions
+    \item Bandeau d'identification ID élève
+    \item Cercles réponses (A/B)
+    \item Simulation remplissage réaliste
+\end{itemize}
+
+\subsection{Génération des fichiers associés}
+\begin{itemize}
+    \item Export PDF via \texttt{epstopdf}
+    \item Génération coordonnées cases (format .gto/json)
+\end{itemize}
+
+\section{Traitement d'image}
+
+\subsection{Prétraitement (MATLAB/OpenCV)}
+\begin{itemize}
+    \item Chargement images scannées
+    \item Conversion niveaux de gris
+    \item Seuillage adaptatif, opérations morphologiques
+\end{itemize}
+
+\subsection{Extraction des réponses}
+\begin{itemize}
+    \item Détection réponses cochées
+    \item Validation positions (bounding boxes)
+\end{itemize}
+
+\subsection{Comparaison et notation automatique}
+\begin{itemize}
+    \item Chargement corrigé (.gto/json)
+    \item Comparaison réponses élève/corrigé
+    \item Calcul et affichage notes (OLED)
+\end{itemize}
+
+\section{Interfaces et interactions}
+
+\subsection{Écran OLED}
+Sélection fichier, affichage résultats
+
+\subsection{Codeur incrémental}
+Navigation intuitive, validation
+
+\subsection{LED}
+Indicateur traitement en cours
+
+\section{Résultats préliminaires et validation}
+Performance actuelle (temps traitement, précision)
+
+\section{Difficultés rencontrées et solutions apportées}
+Alignement graphique, précision traitement image, conversion coordonnées
+
+\section{Perspectives d'amélioration}
+\begin{itemize}
+    \item QR code identification
+    \item Traitement par lots
+    \item Interface utilisateur avancée (Tkinter/webapp)
+    \item Reconnaissance OCR pour ID
+\end{itemize}
+
+\section{Conclusion}
+Résumé objectifs atteints, bilan état actuel, prochaines étapes
+
+\appendix
+
+\section{Annexes}
+\begin{itemize}
+    \item Extraits code Python (Turtle)
+    \item Extraits code MATLAB/OpenCV
+    \item Schéma bloc détaillé
+    \item Tableau spécifications techniques
+    \item Captures d'écran résultats tests
+    \item Arborescence projet
+\end{itemize}
+
+\end{document}
