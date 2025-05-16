@@ -2,28 +2,55 @@
 /**
   ******************************************************************************
   * @file           : main.c
-  * @brief          : Main program body
+  * @brief          : Main program body (SD card test with FATFS)
   ******************************************************************************
   */
 /* USER CODE END Header */
 
 #include "main.h"
+#include "fatfs.h"
+#include "FATFS_SD.h"
+#include "string.h"
 
+/* Private variables */
+FATFS fs;
+FIL fil;
+FRESULT fresult;
+char buffer[100];
+
+/* Function prototypes */
 void SystemClock_Config(void);
 
 int main(void)
 {
   /* MCU Configuration--------------------------------------------------------*/
-  HAL_Init();                  // Init de HAL
-  SystemClock_Config();        // Configuration de l'horloge système
+  HAL_Init();                  // Init HAL
+  SystemClock_Config();        // Horloge système
 
-  Board_Periph_Init();         // Activation des horloges GPIO et périphériques
-  Board_GPIO_Init();           // Initialisation des broches
+  Board_Periph_Init();         // Horloges GPIO & périphériques
+  Board_GPIO_Init();           // Broches
+  MX_SPI1_Init();              // SPI1 pour carte SD
+  MX_FATFS_Init();             // FATFS
+
+  // Monter le système de fichiers
+  fresult = f_mount(&fs, "", 1);
+  if (fresult != FR_OK) {
+    Error_Handler();  // Erreur si carte non présente
+  }
+
+  // Créer / ouvrir un fichier
+  fresult = f_open(&fil, "log.txt", FA_CREATE_ALWAYS | FA_WRITE);
+  if (fresult == FR_OK) {
+    sprintf(buffer, "Hello from STM32G431!\r\n");
+    f_write(&fil, buffer, strlen(buffer), NULL);
+    f_close(&fil);
+  } else {
+    Error_Handler();  // Erreur ouverture fichier
+  }
 
   /* Boucle principale */
   while (1)
   {
-    // Exemple : toggle GPIO_OUT_1 toutes les secondes
     HAL_GPIO_TogglePin(GPIO_OUT_1_PORT, GPIO_OUT_1_PIN);
     HAL_Delay(1000);
   }
@@ -66,7 +93,6 @@ void Error_Handler(void)
 {
   __disable_irq();
   while (1) {
-    // Blink rapide sur GPIO_OUT_1 pour signaler erreur
     HAL_GPIO_TogglePin(GPIO_OUT_1_PORT, GPIO_OUT_1_PIN);
     HAL_Delay(100);
   }
@@ -75,6 +101,6 @@ void Error_Handler(void)
 #ifdef USE_FULL_ASSERT
 void assert_failed(uint8_t *file, uint32_t line)
 {
-  // Debug print ici si tu veux
+  // Debug print ici
 }
 #endif

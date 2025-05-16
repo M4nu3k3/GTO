@@ -15,6 +15,11 @@
 #define FALSE 0
 #define bool BYTE
 
+#define SD_CS_GPIO_Port GPIOB
+#define SD_CS_Pin GPIO_PIN_6
+extern SPI_HandleTypeDef hspi1;
+
+
 static volatile DSTATUS Stat = STA_NOINIT;  /* Disk Status */
 uint16_t Timer1, Timer2; 		/* 1ms Timer Counters */
 static uint8_t CardType; 		/* Type 0:MMC, 1:SDC, 2:Block addressing */
