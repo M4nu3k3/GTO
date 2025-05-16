@@ -12,8 +12,8 @@
 
 //-----[ SD Card SPI Interface Cfgs ]-----
 
-extern SPI_HandleTypeDef 	hspi2;
-#define HSPI_SDCARD 		&hspi2
+extern SPI_HandleTypeDef 	hspi1;		// ou hspi2 si on utilise SPI2
+#define HSPI_SDCARD 		&hspi1      // ou &hspi2 si on utilise SPI2
 #define SD_CS_PORT 			GPIOB
 #define SD_CS_PIN 			GPIO_PIN_12
 #define SPI_TIMEOUT 		100
