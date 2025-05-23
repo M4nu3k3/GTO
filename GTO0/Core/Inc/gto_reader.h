@@ -24,7 +24,7 @@
 #define OFFSET_ID_ETU 0x08
 #define OFFSET_ID_QCM 0x0B
 #define OFFSET_REPONSES 0x1A
-#define CSV_SEPARATOR ";"  // Modifier pour "," ou "\t" selon votre besoin
+#define CSV_SEPARATOR ";"    // Modifier pour "," ou "\t" selon votre besoin
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,7 +40,7 @@ int traiteur_gto(const char *filepath, FILE *csv);
 
 /**
  * @brief  Parcourt tous les fichiers .gto d’un dossier et génère un fichier CSV.
- * @param  nom_dossier : nom du dossier à analyser (ex. "DS1_Maths")
+ * @param  nom_dossier : nom du dossier à analyser (ex. "DS1_DEEP")
  *         => Le fichier CSV généré sera <nom_dossier>.csv
  */
 void export_CSV(const char *nom_dossier);
