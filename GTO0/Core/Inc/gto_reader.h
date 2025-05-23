@@ -23,7 +23,7 @@
 #ifndef INC_GTO_READER_H
 #define INC_GTO_READER_H
 
-#include "ff.h"     // FATFS
+//#include "ff.h"     // FATFS
 #include "stdio.h"
 
 #define MAX_REPONSES 20
@@ -42,7 +42,7 @@ extern "C" {
  * @param csv_file pointeur vers le fichier CSV ouvert en écriture (FATFS)
  * @retval note obtenue (0-20)
  */
-int traiter_gto_sd(FIL *file, FIL *csv_file);
+// int traiter_gto_sd(FIL *file, FIL *csv_file);
 
 #ifdef __cplusplus
 }

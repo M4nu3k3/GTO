@@ -1,0 +1,2 @@
+../Core/Src/board_config.c:4:6:Board_Periph_Init	32	static
+../Core/Src/board_config.c:16:6:Board_GPIO_Init	32	static

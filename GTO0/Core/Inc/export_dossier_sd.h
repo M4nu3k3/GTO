@@ -17,7 +17,7 @@
 #ifndef INC_EXPORT_DOSSIER_SD_H
 #define INC_EXPORT_DOSSIER_SD_H
 
-#include "ff.h"           // FatFS
+// #include "ff.h"           // FatFS
 #include "gto_reader.h"   // traitement d’un fichier .gto
 
 #ifdef __cplusplus
