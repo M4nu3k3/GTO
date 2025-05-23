@@ -8,7 +8,6 @@
 /* USER CODE END Header */
 
 #include "main.h"
-#include "fatfs.h"
 #include "FATFS_SD.h"
 #include "string.h"
 
