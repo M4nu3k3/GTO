@@ -2,8 +2,22 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
+\usepackage{tikz}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
 \usepackage{geometry}
-\geometry{margin=2cm}
+\usepackage{graphicx}
+\usetikzlibrary{positioning}
+\usepackage{adjustbox}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{Emmanuel Bruchard}
+\fancyhead[C]{Matthieu Damien}
+\fancyhead[R]{Bastien Bourdin}
+\fancyfoot[L]{DEEP}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{GTO}
 
 \begin{document}
 
@@ -11,51 +25,99 @@
 \newpage
 
 \section{Introduction}
+
+L’évaluation par QCM est couramment utilisée dans les établissements d’enseignement pour sa simplicité et son objectivité. Toutefois, lorsque le nombre d’élèves devient important, la correction manuelle devient chronophage et sujette à l’erreur. Dans un contexte pédagogique où les examens se répètent régulièrement, l’automatisation du traitement de QCM devient une nécessité.
+
+\vspace*{0.5 cm}
+
+C’est dans cette optique que s’inscrit le projet \textbf{GTO} (Grading Test Operator), qui vise à fournir une solution intégrée, fiable et légère pour générer des sujets, lire des copies scannées et afficher automatiquement les résultats. Le système a été pensé pour être utilisé de manière autonome dans un environnement pédagogique, avec une prise en main intuitive et un coût de déploiement minimal.
+
+\vspace*{0.5 cm}
+
+Le projet repose sur une architecture modulaire combinant génération des sujets, traitement d’image pour lecture des réponses, format de stockage structuré, et affichage embarqué sur écran OLED. La navigation entre les résultats des candidats est assurée par une interface physique simple, adaptée aux contraintes d’un microcontrôleur.
+
+\vspace*{1 cm}
+
+\begin{figure}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tikzpicture}[
+        node distance=2.8cm and 2cm,
+        every node/.style={draw, rounded corners, align=center, minimum height=1.2cm, minimum width=3.3cm, font=\small},
+        every path/.style={->, thick}
+    ]
+        % Noeuds horizontaux
+        \node (gen) {\textbf{Génération QCM} \\ (image .jpg)};
+        \node (rempli) [right=of gen] {\textbf{Remplissage papier} \\ par l'élève};
+        \node (scan) [right=of rempli] {\textbf{Scan et traitement Python} \\ (.gto, bitmaps)};
+        \node (stm) [right=of scan] {\textbf{Affichage des résultats} \\ STM32 + OLED};
+
+        % Flèches
+        \draw (gen) -- (rempli);
+        \draw (rempli) -- (scan);
+        \draw (scan) -- (stm);
+    \end{tikzpicture}
+    \end{adjustbox}
+    \caption{Schéma fonctionnel simplifié du système GTO}
+    \label{fig:schema-fonctionnel-gto}
+\end{figure}
+
+\vspace*{0.5 cm}
+
+Le présent rapport détaille les choix techniques et méthodologiques qui ont guidé la conception du système, l’état d’avancement actuel ainsi que les perspectives d’évolution, notamment en termes d’ergonomie et de traitement automatisé à grande échelle.
+
+\section{Informations générales du projet}
+\vspace*{0.5 cm}
 \begin{itemize}
-    \item Contexte général (évaluations papier automatisées)
-    \item Objectifs du projet
-    \begin{itemize}
-        \item Génération automatique de QCM scannables
-        \item Correction automatique par traitement d'image
-        \item Affichage automatique des résultats
-    \end{itemize}
-    \item Outils utilisés (Python, Turtle, STM32, OpenCV, MATLAB)
+    \item \textbf{Nom du projet} : GTO (Grading Test Operator)
+    \vspace*{0.5 cm}
+    \item \textbf{Encadrants} : Jordan DUFRESNE et Antoine BULARD
+    \vspace*{0.5 cm}
+    \item \textbf{Équipe projet} : Matthieu DAMIEN, Emmanuel BRUCHARD et Bastien BOURDIN
+    \vspace*{0.5 cm}
+    \item \textbf{Formation concernée} : ESEO E3e
+    \vspace*{0.5 cm}
+    \item \textbf{Durée du projet} : janvier à mai 2025
+    \vspace*{0.5 cm}
+    \item \textbf{Date de rendu prévue} : 2025
 \end{itemize}
 
+\newpage
 \section{Cahier des charges fonctionnel et technique}
 
 \subsection{Environnement d'utilisation}
 \begin{itemize}
-    \item Température : 10 à 30°C
-    \item Hygrométrie relative : 40 à 95\%
+    \item Le système doit fonctionner dans une température ambiante comprise entre 10°C et 30°C.
+    \item Le système doit rester opérationnel sous une hygrométrie relative comprise entre 40\% et 95\%.
 \end{itemize}
 
 \subsection{Alimentation}
 \begin{itemize}
-    \item Alimentation AC/DC : 5V, 1A
-    \item Consommation maximale : 12W
+    \item Le système doit être alimenté par une source 5V, 1A de type AC/DC.
+    \item La consommation électrique du système ne doit pas excéder 12W.
 \end{itemize}
 
 \subsection{Entrées}
 \begin{itemize}
-    \item Adaptateur SD (lecture fichiers QCM)
-    \item Carte micro-SD (stockage fichiers QCM)
-    \item Entrées numériques : 3 entrées (0-3.3V)
+    \item Le système doit permettre la lecture de fichiers \texttt{.gto} depuis une carte microSD via un lecteur compatible.
+    \item Le système doit intégrer un emplacement pour carte microSD assurant le stockage local des copies et résultats.
+    \item Le système doit comporter trois entrées numériques supportant des tensions entre 0 et 3.3V.
 \end{itemize}
 
 \subsection{Sorties}
 \begin{itemize}
-    \item Écran OLED (sélection fichiers, affichage résultats)
-    \item LED témoin (traitement en cours)
+    \item Le système doit afficher les résultats sur un écran OLED intégré.
+    \item Le système doit comporter une LED d’indication signalant le traitement en cours.
 \end{itemize}
 
 \subsection{Interfaces Homme-Machine}
 \begin{itemize}
-    \item Écran OLED (résultats : élève, score)
-    \item Codeur incrémental (navigation)
-    \item LED de statut
+    \item Le système doit permettre la navigation dans les résultats à l’aide d’un potentiomètre ou d’un codeur incrémental.
+    \item Le système doit afficher sur l’écran OLED le nom du candidat, son numéro d’identification et sa note.
+    \item Le système doit fournir un retour visuel clair (via LED) indiquant l’état d’activité (repos, lecture, traitement).
 \end{itemize}
 
+\newpage
 \section{Conception et architecture du projet}
 
 \subsection{Schéma Bloc}
@@ -64,48 +126,75 @@ Présentation visuelle des blocs fonctionnels : STM32, SD, OLED, LED, codeur inc
 \subsection{Choix techniques}
 Justification des choix techniques (STM32, OLED, carte SD, etc.)
 
-\section{Génération automatique des QCM (Python/Turtle)}
+\newpage
+\section{Gestion automatisée des copies QCM}
 
-\subsection{Structure visuelle des feuilles}
+\subsection{Structure visuelle des feuilles générées (Python/Pillow)}
+La génération des feuilles de QCM est réalisée à l’aide de la bibliothèque Python \texttt{Pillow}. Le programme crée une image au format A4 comportant l’ensemble des éléments nécessaires à une évaluation lisible et analysable automatiquement :
 \begin{itemize}
-    \item Format A4, 2 colonnes, 20 questions
-    \item Bandeau d'identification ID élève
-    \item Cercles réponses (A/B)
-    \item Simulation remplissage réaliste
+    \item Un format A4 (595 x 842 pixels)
+    \item Un bandeau d’identification pour l’ID de l’élève, structuré en 3 lignes de 10 chiffres (1000 ID possibles dont le 1er, 000, réservé pour la correction)
+    \item Deux colonnes verticales regroupant chacune 10 questions
+    \item Quatre cercles de réponse (A, B, C, D) par question
+    \item Un bandeau d’identification pour le numéro de l’examen, structuré en 3 lignes de 10 chiffres (1000 examens possibles)
 \end{itemize}
 
-\subsection{Génération des fichiers associés}
-\begin{itemize}
-    \item Export PDF via \texttt{epstopdf}
-    \item Génération coordonnées cases (format .gto/json)
-\end{itemize}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{QCM vierge.jpg}
+    \caption{QCM vierge}
+    \label{fig:qcmvierge}
+\end{figure}
 
+\newpage
 \section{Traitement d'image}
 
-\subsection{Prétraitement (MATLAB/OpenCV)}
+\subsection{Phase de validation expérimentale (MATLAB)}
+Avant de passer au traitement en Python, des tests préliminaires ont été menés sous MATLAB pour valider la détection automatique des réponses. L’objectif était de simuler le traitement d’une copie scannée : chargement, conversion en niveaux de gris, binarisation et comparaison avec une copie corrigée. Cette phase a permis de régler les seuils et de préparer le traitement Python.
+
+
+\subsection{Détermination des coordonnées des bulles (Paint)}
+Une fois la validation MATLAB effectuée, l'outil \texttt{Paint} a été utilisé pour déterminer manuellement les coordonnées précises des zones de réponse sur la feuille finale générée. Les étapes suivantes ont été réalisées :
 \begin{itemize}
-    \item Chargement images scannées
-    \item Conversion niveaux de gris
-    \item Seuillage adaptatif, opérations morphologiques
+    \item Identifier le coin supérieur gauche du cercle correspondant à la réponse A de la première question.
+    \item Identifier le coin inférieur droit du même cercle pour définir sa taille.
+    \item Mesurer l'espacement horizontal entre deux réponses voisines et l'espacement vertical entre deux lignes de questions.
 \end{itemize}
 
-\subsection{Extraction des réponses}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{DeterPixelPaint.png}
+    \caption{Figure : Identification des coordonnées avec Paint}
+    \label{fig:idpixel}
+\end{figure}
+
+\subsection{Création du format \texttt{.gto} (Python)}
+Une fois les zones des réponses identifiées sur l’image à l’aide de Paint, un script Python permet d’extraire les valeurs d’intensité (bitmap) de chaque réponse et de les convertir dans un format structuré appelé \texttt{.gto}. Ce fichier contient trois types d’informations :
 \begin{itemize}
-    \item Détection réponses cochées
-    \item Validation positions (bounding boxes)
+    \item Le nom du candidat, converti en chaîne hexadécimale.
+    \item Le numéro de l'examen, pour identifier la session d'épreuve.
+    \item Une matrice de réponses, composée des intensités des 4 zones (A, B, C, D) pour chaque question.
 \end{itemize}
 
-\subsection{Comparaison et notation automatique}
+L’écriture dans le fichier se fait en plusieurs étapes :
 \begin{itemize}
-    \item Chargement corrigé (.gto/json)
-    \item Comparaison réponses élève/corrigé
-    \item Calcul et affichage notes (OLED)
+    \item Le nom du candidat et le numéro d'examen sont encodés et inscrits en en-tête.
+    \item Les données d’intensité associées aux réponses sont ajoutées à la suite.
 \end{itemize}
 
+Le fichier \texttt{.gto} ainsi généré est destiné à être transmis à la carte STM32, qui se charge de l’interprétation des réponses et de l’affichage de la note.
+
+Cette méthode permet de passer d’une simple image de copie scannée à un format compact, standardisé et facilement interprétable côté embarqué.
+
+
+\newpage
 \section{Interfaces et interactions}
 
 \subsection{Écran OLED}
 Sélection fichier, affichage résultats
+
+\subsection{Carte SD}
+SPI via GPIO
 
 \subsection{Codeur incrémental}
 Navigation intuitive, validation
