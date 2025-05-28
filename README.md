@@ -1,4 +1,4 @@
-# Projet GTO - ![Languages](https://img.shields.io/badge/Languages-C%2C%20Python-blue) ![Languages](https://img.shields.io/badge/Languages-Carte%20STM32%2C%20Ecran%20OLED-green)
+# Projet GTO  ![Languages](https://img.shields.io/badge/Languages-C%2C%20Python-blue) ![Languages](https://img.shields.io/badge/Languages-Carte%20STM32%2C%20Ecran%20OLED-green)
 
 **Projet en cours de réalisation**
 
