@@ -57,8 +57,8 @@ void Board_GPIO_Init(void)
     HAL_GPIO_Init(GPIO_OUT_4_PORT, &GPIO_InitStruct);
 
     // (optionnel : si OLED_CS et GPIO_OUT_5_PIN sont la même, éviter double init)
-    if (OLED_CS_PORT != GPIO_OUT_5_PORT || OLED_CS_PIN != GPIO_OUT_5_PIN) {
+    if (OLED_CS_PORT != GPIO_OUT_5_PIN || OLED_CS_PIN != GPIO_OUT_5_PIN) {
         GPIO_InitStruct.Pin = GPIO_OUT_5_PIN;
-        HAL_GPIO_Init(GPIO_OUT_5_PORT, &GPIO_InitStruct);
+        HAL_GPIO_Init(GPIO_OUT_5_PIN, &GPIO_InitStruct);
     }
 }

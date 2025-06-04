@@ -1,0 +1,4 @@
+../core/Src/spi.c:16:6:MX_SPI1_Init	2
+../core/Src/spi.c:37:19:SPI_Transmit	1
+../core/Src/spi.c:50:19:SPI_Receive	1
+../core/Src/spi.c:55:19:SPI_TransmitReceive	1

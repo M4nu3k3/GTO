@@ -1,4 +1,7 @@
 "./Core/Src/board_config.o"
+"./Core/Src/export_dossier_sd.o"
+"./Core/Src/gto_reader.o"
+"./Core/Src/led.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32g4xx_hal_msp.o"
 "./Core/Src/stm32g4xx_it.o"

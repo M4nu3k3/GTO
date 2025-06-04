@@ -1,0 +1,2 @@
+../Core/Src/led.c:14:6:allumer_led	8	static
+../Core/Src/led.c:18:6:eteindre_led	8	static

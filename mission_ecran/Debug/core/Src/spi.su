@@ -1,0 +1,4 @@
+../core/Src/spi.c:16:6:MX_SPI1_Init	8	static
+../core/Src/spi.c:37:19:SPI_Transmit	16	static
+../core/Src/spi.c:50:19:SPI_Receive	8	static
+../core/Src/spi.c:55:19:SPI_TransmitReceive	16	static

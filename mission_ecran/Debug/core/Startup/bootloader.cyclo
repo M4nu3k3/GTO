@@ -1,0 +1,15 @@
+../core/Startup/bootloader.c:434:13:Unlock	2
+../core/Startup/bootloader.c:443:13:Lock	1
+../core/Startup/bootloader.c:459:21:GetStatus	5
+../core/Startup/bootloader.c:354:13:BL_FLASH_Erase	3
+../core/Startup/bootloader.c:448:21:WaitForLastOperation	2
+../core/Startup/bootloader.c:372:21:FLASH_write_packet	10
+../core/Startup/bootloader.c:184:6:UART_write	2
+../core/Startup/bootloader.c:191:9:UART_read	4
+../core/Startup/bootloader.c:245:9:TOASTER_receive	21
+../core/Startup/bootloader.c:230:9:TOASTER_receive_B0	4
+../core/Startup/bootloader.c:340:6:msgToUART	3
+../core/Startup/bootloader.c:209:6:TOASTER_send_request_for_program	1
+../core/Startup/bootloader.c:221:6:TOASTER_ask_for_packet	1
+../core/Startup/bootloader.c:63:52:bootloader	14
+../core/Startup/bootloader.c:177:5:test	1
