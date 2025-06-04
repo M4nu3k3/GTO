@@ -1,0 +1,8 @@
+../core/Src/st7789v.c:13:6:ST7789_SendCommand	16	static
+../core/Src/st7789v.c:20:6:ST7789_SendData	16	static
+../core/Src/st7789v.c:27:6:ST7789_Reset	8	static
+../core/Src/st7789v.c:54:6:ST7789_SetAddressWindow	32	static
+../core/Src/st7789v.c:72:6:ST7789_DrawPixel	16	static
+../core/Src/st7789v.c:82:6:ST7789_FillColor	16	static
+../core/Src/st7789v.c:97:6:ST7789_SetRotation	16	static
+../core/Src/st7789v.c:36:6:ST7789_Init	16	static

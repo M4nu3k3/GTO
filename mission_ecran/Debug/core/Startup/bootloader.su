@@ -1,0 +1,15 @@
+../core/Startup/bootloader.c:434:13:Unlock	0	static
+../core/Startup/bootloader.c:443:13:Lock	0	static
+../core/Startup/bootloader.c:459:21:GetStatus	0	static
+../core/Startup/bootloader.c:354:13:BL_FLASH_Erase	16	static
+../core/Startup/bootloader.c:448:21:WaitForLastOperation	16	static
+../core/Startup/bootloader.c:372:21:FLASH_write_packet	32	static,ignoring_inline_asm
+../core/Startup/bootloader.c:184:6:UART_write	0	static
+../core/Startup/bootloader.c:191:9:UART_read	0	static
+../core/Startup/bootloader.c:245:9:TOASTER_receive	40	static
+../core/Startup/bootloader.c:230:9:TOASTER_receive_B0	16	static
+../core/Startup/bootloader.c:340:6:msgToUART	16	static
+../core/Startup/bootloader.c:209:6:TOASTER_send_request_for_program	24	static
+../core/Startup/bootloader.c:221:6:TOASTER_ask_for_packet	24	static
+../core/Startup/bootloader.c:63:52:bootloader	16432	static,ignoring_inline_asm
+../core/Startup/bootloader.c:177:5:test	0	static

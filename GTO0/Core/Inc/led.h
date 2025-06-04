@@ -18,7 +18,7 @@ extern "C" {
 #endif
 
 #include "stm32g4xx_hal.h"
-#include "board_config.h"  // ⬅️ On ajoute l'en-tête du board ici
+#include "board_config.h"
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
