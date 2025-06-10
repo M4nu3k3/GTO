@@ -1,0 +1,4 @@
+../core/Src/config.c:4:6:MX_ST7789_GPIO_Init	1
+../core/Src/config.c:19:6:MX_LED_GPIO_Init	1
+../core/Src/config.c:35:6:MX_Button_Init	1
+../core/Src/config.c:46:13:Error_Handler	1

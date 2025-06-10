@@ -1,0 +1,6 @@
+../core/Src/main.c:24:6:afficher_elements	48	static
+../core/Src/main.c:41:6:animation_chargement	56	static
+../core/Src/main.c:65:6:afficher_matieres	32	static
+../core/Src/main.c:72:6:attendre_appui_long	16	static
+../core/Src/main.c:84:6:traitement_appui_long	32	static
+../core/Src/main.c:137:5:main	24	static

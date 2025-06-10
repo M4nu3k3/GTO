@@ -1,0 +1,2 @@
+../core/Src/fonts_8x12.c:117:6:ST7789_WriteChar_8x12	56	static
+../core/Src/fonts_8x12.c:138:6:ST7789_WriteString_8x12	48	static

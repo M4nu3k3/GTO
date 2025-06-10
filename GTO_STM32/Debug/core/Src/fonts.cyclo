@@ -1,0 +1,2 @@
+../core/Src/fonts.c:212:6:ST7789_WriteChar	5
+../core/Src/fonts.c:238:6:ST7789_WriteString	2

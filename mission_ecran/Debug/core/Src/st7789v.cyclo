@@ -1,8 +1,0 @@
-../core/Src/st7789v.c:13:6:ST7789_SendCommand	1
-../core/Src/st7789v.c:20:6:ST7789_SendData	1
-../core/Src/st7789v.c:27:6:ST7789_Reset	1
-../core/Src/st7789v.c:54:6:ST7789_SetAddressWindow	1
-../core/Src/st7789v.c:72:6:ST7789_DrawPixel	3
-../core/Src/st7789v.c:82:6:ST7789_FillColor	2
-../core/Src/st7789v.c:97:6:ST7789_SetRotation	5
-../core/Src/st7789v.c:36:6:ST7789_Init	1
